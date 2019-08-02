@@ -3,26 +3,63 @@ library(DT)
 library(tidyverse)
 library(rvest)
 library(yaml)
+library(googlesheets)
 
 dat <- NULL # initialize
+
+andy_URL <- "https://docs.google.com/spreadsheets/d/1dNJYYRy0BG3c725nN--BZkuU3uklDned7hTylkrWoBM/edit#gid=0"
+andy_key <- extract_key_from_url(andy_URL)
+andy_data <- andy_URL %>%
+  gs_url()%>% 
+  gs_read(ws = "2019 Draft", 
+          col_names = TRUE, 
+          stringsAsFactors = FALSE) # doesn't seem to work
+
+team_names <- unname(andy_data[, 1])
+
+rosters <- data.frame(t(andy_data[, 2:11])) %>% 
+  # set_names(unlist(team_names)) %>% 
+  mutate_all(.funs = as.character)  # this makes the factors characters again.
+
+# need to correct typos
+source("andy_cannot_spell.R")
+rosters <- data.frame(lapply(rosters, andy_cannot_spell))
+
+# this is just a backup data set, maintained by Andrew McAleavey (and not intended to last)
+# totally not necessary
+andrew_URL <- "https://docs.google.com/spreadsheets/d/1dLKu1jKvbvWEt_nSG2kP22A-kfQuV_TGYz-19lbJhFI/edit?usp=sharing"
+andrew_data <- andrew_URL %>%
+  gs_url()
+gs_ws_ls(andrew_data)
+andrew_data <- andrew_URL %>%
+  gs_url() %>% 
+  gs_read(ws = "Sheet1", 
+          col_names = TRUE, 
+          stringsAsFactors = FALSE) 
+
 
 pinchy_crabs <- read_yaml("teams.yml")$pinchy_crabs
 bats <- read_yaml("teams.yml")$bats
 
-dat <- "https://www.basketball-reference.com/leagues/NBA_2019_advanced.html" %>%
+dat0 <- "https://www.basketball-reference.com/leagues/NBA_2019_advanced.html" %>%
   read_html() %>% 
   html_table() %>% 
   getElement(1) 
 
-dat <- dat[, c("Player", "Pos", "MP", "WS")] %>% 
-  filter(Player %in% c(pinchy_crabs, bats)) %>% 
+dat <- dat0[, c("Player", "Pos", "MP", "WS")] %>% 
+  filter(Player %in% unlist(rosters)) %>%  # this takes only players in the Secret NBA
+  # NOTE: need to harmonize the player names to see if anyone *cough andy* misspelled any player names
+  group_by(Player) %>% 
+  arrange(desc(MP)) %>%
+  slice(1) %>%  # takes just the first row for each player, which has all their positions
+  ungroup() %>% 
   transmute(
-    Team = ifelse(Player %in% pinchy_crabs, "Pinchy Crabs", "Ballin' Bats"),
     Player = Player,
     Position = Pos,
     `Minutes Played` = as.numeric(MP),
     `Win Shares` = as.numeric(WS)
   )
+# need a way to track player teams. Why am I blanking? 
 
 ui <- fluidPage(
   
