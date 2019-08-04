@@ -42,8 +42,8 @@ andrew_data <- andrew_URL %>%
           stringsAsFactors = FALSE) 
 
 #legacy:
-pinchy_crabs <- read_yaml("teams.yml")$pinchy_crabs
-bats <- read_yaml("teams.yml")$bats
+# pinchy_crabs <- read_yaml("teams.yml")$pinchy_crabs
+# bats <- read_yaml("teams.yml")$bats
 
 # Get data from Basketball Reference
 # Will update for 2019-2020
