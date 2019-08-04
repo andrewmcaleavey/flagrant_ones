@@ -76,6 +76,7 @@ dat <- dat0[, c("Player", "Pos", "MP", "WS")] %>%
 ############
 
 ui <- fluidPage(
+  titlePanel("Secret NBA"),
   
   fluidRow(
     column(6,
