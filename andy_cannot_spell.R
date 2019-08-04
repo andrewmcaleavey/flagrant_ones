@@ -13,7 +13,7 @@ andy_cannot_spell <- function(x){
   x <- replace(x, grep("Kristaps Porziņģis", x), "Kristaps Porziņģis")  # not in the data
   x <- replace(x, grep("Mfiondu Kabengele", x), "Mfiondu Kabengele")  # rookie
   x <- replace(x, grep("Tim Hardaway Jr.", x), "Tim Hardaway")
-  x <- replace(x, grep("Ja Morant", x), "Ja Morant")  # rookie, might be listed as Temetrius Morant
+  x <- replace(x, grep("Ja Morant", x), "Ja Morant")  # rookie, might be listed as Temetrius Morant eventually
   x <- replace(x, grep("Mo Bamba", x), "Mohamed Bamba")
   x <- replace(x, grep("Zach Lavine", x), "Zach LaVine")
   x <- replace(x, grep("DeAndre Ayton", x), "Deandre Ayton")
@@ -31,7 +31,7 @@ andy_cannot_spell <- function(x){
   x <- replace(x, grep("Lebron James", x), "LeBron James")
   x
 }
-# rookies may require attention once real data starts
+# rookies may require attention once real data  from 2019-2020 starts
 
 # here are the names that caused problems:
 # "Nikola Vucevic"           "Marvin Bagley III"        "Caris Levert"             NA                        
