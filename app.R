@@ -31,15 +31,15 @@ players$Player <-  andy_cannot_spell(players$Player)
 
 # this is just a backup data set, maintained by Andrew McAleavey (and not intended to last)
 # totally not necessary
-andrew_URL <- "https://docs.google.com/spreadsheets/d/1dLKu1jKvbvWEt_nSG2kP22A-kfQuV_TGYz-19lbJhFI/edit?usp=sharing"
-andrew_data <- andrew_URL %>%
-  gs_url()
-gs_ws_ls(andrew_data)
-andrew_data <- andrew_URL %>%
-  gs_url() %>% 
-  gs_read(ws = "Sheet1", 
-          col_names = TRUE, 
-          stringsAsFactors = FALSE) 
+# andrew_URL <- "https://docs.google.com/spreadsheets/d/1dLKu1jKvbvWEt_nSG2kP22A-kfQuV_TGYz-19lbJhFI/edit?usp=sharing"
+# andrew_data <- andrew_URL %>%
+#   gs_url()
+# gs_ws_ls(andrew_data)
+# andrew_data <- andrew_URL %>%
+#   gs_url() %>% 
+#   gs_read(ws = "Sheet1", 
+#           col_names = TRUE, 
+#           stringsAsFactors = FALSE) 
 
 #legacy:
 # pinchy_crabs <- read_yaml("teams.yml")$pinchy_crabs
