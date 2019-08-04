@@ -390,14 +390,14 @@ server <- function(input, output) {
   output$Bozos <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
-        filter(Team == unique(dat$Team)[6]) %>% 
+        filter(Team == team_names[6]) %>% 
         mutate(`Win Shares` = WS, 
                `Minutes Played` = MP) %>% 
         select(-Team, -WS, -MP) %>% 
         arrange(desc(`Win Shares`))
       
       tagList(
-        h3(unique(dat$Team)[6]),
+        h3(team_names[6]),
         h4(
           paste0(
             "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
@@ -423,14 +423,14 @@ server <- function(input, output) {
   output$Carters <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
-        filter(Team == unique(dat$Team)[7]) %>% 
+        filter(Team == team_names[7]) %>% 
         mutate(`Win Shares` = WS, 
                `Minutes Played` = MP) %>% 
         select(-Team, -WS, -MP) %>% 
         arrange(desc(`Win Shares`))
       
       tagList(
-        h3(unique(dat$Team)[7]),
+        h3(team_names[7]),
         h4(
           paste0(
             "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
@@ -456,14 +456,14 @@ server <- function(input, output) {
   output$Megs <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
-        filter(Team == unique(dat$Team)[8]) %>% 
+        filter(Team == team_names[8]) %>% 
         mutate(`Win Shares` = WS, 
                `Minutes Played` = MP) %>% 
         select(-Team, -WS, -MP) %>% 
         arrange(desc(`Win Shares`))
       
       tagList(
-        h3(unique(dat$Team)[8]),
+        h3(team_names[8]),
         h4(
           paste0(
             "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
