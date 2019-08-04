@@ -57,35 +57,42 @@ dat <- dat0[, c("Player", "Pos", "MP", "WS")] %>%
   right_join(players, by = "Player") %>%  # this takes only players in the Secret NBA
   # NOTE: need to harmonize the player names to see if anyone *cough andy* misspelled any player names
   group_by(Player) %>% 
-  arrange(desc(MP)) %>%
-  slice(1) %>%  # takes just the first row for each player, which has all their positions
+  mutate(MP = as.numeric(MP), 
+         WS = as.numeric(WS)) %>% 
+  filter(MP == max(MP)) %>%   # takes just the first row for each player, which has all their positions
   ungroup() %>% 
   transmute(
     Player = Player,
     Team = Team,
-    Position = Pos,
-    MP = as.numeric(MP),
-    WS = as.numeric(WS), 
+    Position = Pos, 
+    MP = MP,
+    WS = WS
   ) %>% 
   arrange(Team, desc(WS))
 # need a way to track player teams. Why am I blanking? 
 
+############
+# HERE'S THE APP CODE:
+############
 
 ui <- fluidPage(
   
   fluidRow(
     column(6,
-      uiOutput("pinchy")
+           uiOutput("pinchy")
     ),
     column(6,
-      uiOutput("bats")
+           uiOutput("bats")
+    ), 
+    column(6,
+           uiOutput("shirts")
     )
   )
-   
+  
 )
 
 server <- function(input, output) {
-   
+  
   output$pinchy <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
@@ -151,7 +158,39 @@ server <- function(input, output) {
       )
     }
   })
-   
+  
+  output$shirts <- renderUI({
+    if (!is.null(dat)) {
+      tmp <- dat %>% 
+        filter(Team == "Pittsburgh Shirts (Hayes)") %>% 
+        mutate(`Win Shares` = WS, 
+               `Minutes Played` = MP) %>% 
+        select(-Team, -WS, -MP) %>% 
+        arrange(desc(`Win Shares`))
+      
+      tagList(
+        h3("Pittsburgh Shirts"),
+        h4(
+          paste0(
+            "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
+            ", per 48 Minutes: ",
+            round(sum(tmp$`Win Shares`, na.rm = TRUE) / sum(tmp$`Minutes Played`, na.rm = TRUE) * 48, 3)
+          )
+        ),
+        renderDataTable(
+          datatable(
+            tmp,
+            rownames = FALSE,
+            options = list(
+              paging = FALSE,
+              searching = FALSE,
+              bInfo = FALSE
+            )
+          )
+        )
+      )
+    }
+  })
 }
 
 shinyApp(ui = ui, server = server)
