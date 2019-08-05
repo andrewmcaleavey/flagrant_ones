@@ -40,6 +40,10 @@ dat <- dat0[, c("Player", "Pos", "MP", "WS")] %>%
   group_by(Player) %>% 
   mutate(MP = as.numeric(MP), 
          WS = as.numeric(WS)) %>% 
+  replace_na(list(Player = "Empty Spot", 
+                  Pos = "Future King",
+                  MP = 0, 
+                  WS = 0)) %>% 
   filter(MP == max(MP)) %>%   # takes just the row with the most minutes per player
   ungroup() %>% 
   transmute(
