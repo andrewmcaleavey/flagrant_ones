@@ -36,10 +36,11 @@ dat0 <- "https://www.basketball-reference.com/leagues/NBA_2019_advanced.html" %>
 # Modify by mostly filtering out undrafted players
 dat <- dat0[, c("Player", "Pos", "MP", "WS")] %>% 
   right_join(players, by = "Player") %>%  # this takes only players in the Secret NBA
+  # Drops the rookies though, since they don't show up in the data yet
   group_by(Player) %>% 
   mutate(MP = as.numeric(MP), 
          WS = as.numeric(WS)) %>% 
-  filter(MP == max(MP)) %>%   # takes just the first row for each player, which has all their positions
+  filter(MP == max(MP)) %>%   # takes just the row with the most minutes per player
   ungroup() %>% 
   transmute(
     Player = Player,
