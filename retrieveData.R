@@ -40,7 +40,7 @@ dat <- dat0[, c("Player", "Pos", "MP", "WS")] %>%
   group_by(Player) %>% 
   mutate(MP = as.numeric(MP), 
          WS = as.numeric(WS)) %>% 
-  replace_na(list(Player = "Empty Spot", 
+  replace_na(list(Player = "Future King", 
                   Pos = "Future King",
                   MP = 0, 
                   WS = 0)) %>% 
