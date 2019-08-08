@@ -29,6 +29,12 @@ andy_cannot_spell <- function(x){
   x <- replace(x, grep("TJ Warren", x), "T.J. Warren")
   x <- replace(x, grep("Kentavious Caldwell Pope", x), "Kentavious Caldwell-Pope")
   x <- replace(x, grep("Lebron James", x), "LeBron James")
+  x <- replace(x, grep("Patrick Beverly", x), "Patrick Beverley")
+  x <- replace(x, grep("Josh Gray", x), "Joshia Gray")  # need to check on this when 2019 season starts
+  x <- replace(x, grep("Moe Wagner", x), "Moritz Wagner")  # need to check on this with 2019 season data
+  x <- replace(x, grep("CJ Miles", x), "C.J. Miles")
+  x <- replace(x, grep("Boban Marjanovic", x), "Boban Marjanović")
+  
   x
 }
 # rookies may require attention once real data  from 2019-2020 starts
