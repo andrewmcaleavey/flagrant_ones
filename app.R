@@ -16,43 +16,46 @@ ui <- fluidPage(
   
   fluidRow(
     column(6,
-           uiOutput("pinchy")
+           uiOutput("team1")
     ),
     column(6,
-           uiOutput("bats")
+           uiOutput("team2")
     ), 
     column(6,
-           uiOutput("shirts")
+           uiOutput("team3")
     ),
     column(6,
-           uiOutput("PBR")
+           uiOutput("team4")
     ),
     column(6,
-           uiOutput("Leopards")
+           uiOutput("team5")
     ),
     column(6,
-           uiOutput("Kennedys")
+           uiOutput("team6")
     ),
     column(6,
-           uiOutput("Spongebobs")
+           uiOutput("team7")
     ),
     column(6,
-           uiOutput("Tables")
+           uiOutput("team8")
     ),
     column(6,
-           uiOutput("Bozos")
+           uiOutput("team9")
     ),
     column(6,
-           uiOutput("Carters")
+           uiOutput("team10")
     ),
     column(6,
-           uiOutput("Megs")
+           uiOutput("team11")
     ),
     column(6,
-           uiOutput("Frances")
+           uiOutput("team12")
     ),
     column(6,
-           uiOutput("Lawyers")
+           uiOutput("team13")
+    ), 
+    column(6,
+           uiOutput("team14")
     )
   )
   
@@ -64,17 +67,17 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
-  output$pinchy <- renderUI({
+  output$team1 <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
-        filter(Team == "Baltimore Pinchy Crabs (Sean)") %>% 
+        filter(Team == team_names[1]) %>% 
         mutate(`Win Shares` = WS, 
                `Minutes Played` = MP) %>% 
         select(-Team, -WS, -MP) %>% 
         arrange(desc(`Win Shares`))
       
       tagList(
-        h3("Baltimore Pinchy Crabs"),
+        h3(team_names[1]),
         h4(
           paste0(
             "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
@@ -97,17 +100,17 @@ server <- function(input, output) {
     }
   })
   
-  output$bats <- renderUI({
+  output$team2 <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
-        filter(Team == "Austin Ballin' Bats (Carl)") %>% 
+        filter(Team == team_names[2]) %>% 
         mutate(`Win Shares` = WS, 
                `Minutes Played` = MP) %>% 
         select(-Team, -WS, -MP) %>% 
         arrange(desc(`Win Shares`))
       
       tagList(
-        h3("Austin Ballin' Bats"),
+        h3(team_names[2]),
         h4(
           paste0(
             "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
@@ -130,17 +133,17 @@ server <- function(input, output) {
     }
   })
   
-  output$shirts <- renderUI({
+  output$team3 <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
-        filter(Team == "Pittsburgh Shirts (Hayes)") %>% 
+        filter(Team == team_names[3]) %>% 
         mutate(`Win Shares` = WS, 
                `Minutes Played` = MP) %>% 
         select(-Team, -WS, -MP) %>% 
         arrange(desc(`Win Shares`))
       
       tagList(
-        h3("Pittsburgh Shirts"),
+        h3(team_names[3]),
         h4(
           paste0(
             "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
@@ -163,17 +166,17 @@ server <- function(input, output) {
     }
   })
   
-  output$PBR <- renderUI({
+  output$team4 <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
-        filter(Team == "St. Louis PBR Tallboys") %>% 
+        filter(Team == team_names[4]) %>% 
         mutate(`Win Shares` = WS, 
                `Minutes Played` = MP) %>% 
         select(-Team, -WS, -MP) %>% 
         arrange(desc(`Win Shares`))
       
       tagList(
-        h3("St. Louis PBR Tallboys"),
+        h3(team_names[4]),
         h4(
           paste0(
             "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
@@ -196,17 +199,17 @@ server <- function(input, output) {
     }
   })
   
-  output$Leopards <- renderUI({
+  output$team5 <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
-        filter(Team == "Kauai Leopards") %>% 
+        filter(Team == team_names[5]) %>% 
         mutate(`Win Shares` = WS, 
                `Minutes Played` = MP) %>% 
         select(-Team, -WS, -MP) %>% 
         arrange(desc(`Win Shares`))
       
       tagList(
-        h3("Kauai Leopards"),
+        h3(team_names[5]),
         h4(
           paste0(
             "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
@@ -229,106 +232,7 @@ server <- function(input, output) {
     }
   })
   
-  output$Kennedys <- renderUI({
-    if (!is.null(dat)) {
-      tmp <- dat %>% 
-        filter(Team == "Kennebunkport Kennedys") %>% 
-        mutate(`Win Shares` = WS, 
-               `Minutes Played` = MP) %>% 
-        select(-Team, -WS, -MP) %>% 
-        arrange(desc(`Win Shares`))
-      
-      tagList(
-        h3("Kennebunkport Kennedys"),
-        h4(
-          paste0(
-            "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
-            ", per 48 Minutes: ",
-            round((sum(tmp$`Win Shares`, na.rm = TRUE) / sum(tmp$`Minutes Played`, na.rm = TRUE)) * 48, 3)
-          )
-        ),
-        renderDataTable(
-          datatable(
-            tmp,
-            rownames = FALSE,
-            options = list(
-              paging = FALSE,
-              searching = FALSE,
-              bInfo = FALSE
-            )
-          )
-        )
-      )
-    }
-  })
-  
-  output$Spongebobs <- renderUI({
-    if (!is.null(dat)) {
-      tmp <- dat %>% 
-        filter(Team == "Bikini Bottom Spongebobs") %>% 
-        mutate(`Win Shares` = WS, 
-               `Minutes Played` = MP) %>% 
-        select(-Team, -WS, -MP) %>% 
-        arrange(desc(`Win Shares`))
-      
-      tagList(
-        h3("Bikini Bottom Spongebobs"),
-        h4(
-          paste0(
-            "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
-            ", per 48 Minutes: ",
-            round((sum(tmp$`Win Shares`, na.rm = TRUE) / sum(tmp$`Minutes Played`, na.rm = TRUE)) * 48, 3)
-          )
-        ),
-        renderDataTable(
-          datatable(
-            tmp,
-            rownames = FALSE,
-            options = list(
-              paging = FALSE,
-              searching = FALSE,
-              bInfo = FALSE
-            )
-          )
-        )
-      )
-    }
-  })
-  
-  output$Tables <- renderUI({
-    if (!is.null(dat)) {
-      tmp <- dat %>% 
-        filter(Team == "My House Tables") %>% 
-        mutate(`Win Shares` = WS, 
-               `Minutes Played` = MP) %>% 
-        select(-Team, -WS, -MP) %>% 
-        arrange(desc(`Win Shares`))
-      
-      tagList(
-        h3("My House Tables"),
-        h4(
-          paste0(
-            "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
-            ", per 48 Minutes: ",
-            round((sum(tmp$`Win Shares`, na.rm = TRUE) / sum(tmp$`Minutes Played`, na.rm = TRUE)) * 48, 3)
-          )
-        ),
-        renderDataTable(
-          datatable(
-            tmp,
-            rownames = FALSE,
-            options = list(
-              paging = FALSE,
-              searching = FALSE,
-              bInfo = FALSE
-            )
-          )
-        )
-      )
-    }
-  })
-  
-  output$Bozos <- renderUI({
+  output$team6 <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
         filter(Team == team_names[6]) %>% 
@@ -361,7 +265,7 @@ server <- function(input, output) {
     }
   })
   
-  output$Carters <- renderUI({
+  output$team7 <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
         filter(Team == team_names[7]) %>% 
@@ -394,7 +298,7 @@ server <- function(input, output) {
     }
   })
   
-  output$Megs <- renderUI({
+  output$team8 <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
         filter(Team == team_names[8]) %>% 
@@ -427,7 +331,7 @@ server <- function(input, output) {
     }
   })
   
-  output$Frances <- renderUI({
+  output$team9 <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
         filter(Team == team_names[9]) %>% 
@@ -460,7 +364,7 @@ server <- function(input, output) {
     }
   })
   
-  output$Lawyers <- renderUI({
+  output$team10 <- renderUI({
     if (!is.null(dat)) {
       tmp <- dat %>% 
         filter(Team == team_names[10]) %>% 
@@ -492,6 +396,139 @@ server <- function(input, output) {
       )
     }
   })
+  
+  output$team11 <- renderUI({
+    if (!is.null(dat)) {
+      tmp <- dat %>% 
+        filter(Team == team_names[11]) %>% 
+        mutate(`Win Shares` = WS, 
+               `Minutes Played` = MP) %>% 
+        select(-Team, -WS, -MP) %>% 
+        arrange(desc(`Win Shares`))
+      
+      tagList(
+        h3(team_names[11]),
+        h4(
+          paste0(
+            "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
+            ", per 48 Minutes: ",
+            round((sum(tmp$`Win Shares`, na.rm = TRUE) / sum(tmp$`Minutes Played`, na.rm = TRUE)) * 48, 3)
+          )
+        ),
+        renderDataTable(
+          datatable(
+            tmp,
+            rownames = FALSE,
+            options = list(
+              paging = FALSE,
+              searching = FALSE,
+              bInfo = FALSE
+            )
+          )
+        )
+      )
+    }
+  })
+  
+  output$team12 <- renderUI({
+    if (!is.null(dat)) {
+      tmp <- dat %>% 
+        filter(Team == team_names[12]) %>% 
+        mutate(`Win Shares` = WS, 
+               `Minutes Played` = MP) %>% 
+        select(-Team, -WS, -MP) %>% 
+        arrange(desc(`Win Shares`))
+      
+      tagList(
+        h3(team_names[12]),
+        h4(
+          paste0(
+            "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
+            ", per 48 Minutes: ",
+            round((sum(tmp$`Win Shares`, na.rm = TRUE) / sum(tmp$`Minutes Played`, na.rm = TRUE)) * 48, 3)
+          )
+        ),
+        renderDataTable(
+          datatable(
+            tmp,
+            rownames = FALSE,
+            options = list(
+              paging = FALSE,
+              searching = FALSE,
+              bInfo = FALSE
+            )
+          )
+        )
+      )
+    }
+  })
+  
+  output$team13 <- renderUI({
+    if (!is.null(dat)) {
+      tmp <- dat %>% 
+        filter(Team == team_names[13]) %>% 
+        mutate(`Win Shares` = WS, 
+               `Minutes Played` = MP) %>% 
+        select(-Team, -WS, -MP) %>% 
+        arrange(desc(`Win Shares`))
+      
+      tagList(
+        h3(team_names[13]),
+        h4(
+          paste0(
+            "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
+            ", per 48 Minutes: ",
+            round((sum(tmp$`Win Shares`, na.rm = TRUE) / sum(tmp$`Minutes Played`, na.rm = TRUE)) * 48, 3)
+          )
+        ),
+        renderDataTable(
+          datatable(
+            tmp,
+            rownames = FALSE,
+            options = list(
+              paging = FALSE,
+              searching = FALSE,
+              bInfo = FALSE
+            )
+          )
+        )
+      )
+    }
+  })
+  
+  output$team14 <- renderUI({
+    if (!is.null(dat)) {
+      tmp <- dat %>% 
+        filter(Team == team_names[14]) %>% 
+        mutate(`Win Shares` = WS, 
+               `Minutes Played` = MP) %>% 
+        select(-Team, -WS, -MP) %>% 
+        arrange(desc(`Win Shares`))
+      
+      tagList(
+        h3(team_names[14]),
+        h4(
+          paste0(
+            "Win Shares: ", sum(tmp$`Win Shares`, na.rm = TRUE),
+            ", per 48 Minutes: ",
+            round((sum(tmp$`Win Shares`, na.rm = TRUE) / sum(tmp$`Minutes Played`, na.rm = TRUE)) * 48, 3)
+          )
+        ),
+        renderDataTable(
+          datatable(
+            tmp,
+            rownames = FALSE,
+            options = list(
+              paging = FALSE,
+              searching = FALSE,
+              bInfo = FALSE
+            )
+          )
+        )
+      )
+    }
+  })
+  
 }
 
 shinyApp(ui = ui, server = server)
