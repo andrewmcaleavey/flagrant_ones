@@ -28,7 +28,7 @@ players$Player <-  andy_cannot_spell(players$Player)
 
 # Get data from Basketball Reference
 # Will update for 2019-2020
-dat0 <- "https://www.basketball-reference.com/leagues/NBA_2019_advanced.html" %>%
+dat0 <- "https://www.basketball-reference.com/leagues/NBA_2020_advanced.html" %>%
   read_html() %>% 
   html_table() %>% 
   getElement(1) 
